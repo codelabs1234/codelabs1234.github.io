@@ -1,25 +1,78 @@
-{
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
-}
+//javaScript for Little Lemon Website
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Responsive navigation menu
+    const navToggle = document.querySelector('#nav-toggle');
+    const navMenu = document.querySelector('#nav-menu');
+
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+
+    // Smooth scrolling for navigation links
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Dynamic "Special Offers" section
+    const offers = [
+        { name: 'Lemonade Special', price: '$5', description: 'Refreshing lemonade made fresh daily!' },
+        { name: 'Citrus Salad', price: '$7', description: 'A mix of fresh greens and citrus fruits.' },
+        { name: 'Lemon Tart', price: '$3', description: 'A delicious lemon dessert to satisfy your cravings.' }
+    ];
+
+    const offersContainer = document.querySelector('#special-offers');
+
+    offers.forEach(offer => {
+        const offerCard = document.createElement('div');
+        offerCard.classList.add('offer-card');
+
+        offerCard.innerHTML = `
+            <h3>${offer.name}</h3>
+            <p>${offer.description}</p>
+            <span class="price">${offer.price}</span>
+        `;
+
+        offersContainer.appendChild(offerCard);
+    });
+
+    // Back to Top button
+    const backToTopButton = document.querySelector('#back-to-top');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Subscribe form
+    const subscribeForm = document.querySelector('#subscribe-form');
+
+    subscribeForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const emailInput = subscribeForm.querySelector('#email');
+        alert(`Thank you for subscribing, ${emailInput.value}!`);
+
+        emailInput.value = '';
+    });
+});
